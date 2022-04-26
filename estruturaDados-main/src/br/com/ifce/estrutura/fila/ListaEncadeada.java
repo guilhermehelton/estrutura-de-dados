@@ -19,21 +19,41 @@ public class ListaEncadeada {
 		count++;
 	}
 	
+	public void addInicio(Node node) {
+		if(primeiro == null) {
+			primeiro = node;
+		} else if(ultimo == null) {
+			ultimo = primeiro;
+			primeiro = node;
+			primeiro.setProximo(ultimo);
+		} else {
+			node.setProximo(primeiro);
+			primeiro = node;
+		}
+	}
+	
 	private void percorrerRemover(Node node, String descricao) {
 		if(primeiro.getDescricao().equalsIgnoreCase(descricao)) {
 			primeiro = node.getProximo();
+			count--;
 		} else if(node.getProximo().getDescricao().equalsIgnoreCase(descricao)) {
 			node.setProximo(node.getProximo().getProximo());
+			count--;
 		} else if(node.getProximo().getDescricao().equalsIgnoreCase(ultimo.getDescricao())){
 			node.setProximo(null);
+			count--;
 		} else {
 			percorrerRemover(node.getProximo(), descricao);			
 		}
-		count--;
+		
 	}
 	
 	public void remover(String descricao) {
-		percorrerRemover(primeiro, descricao);
+		if(primeiro == null) {
+			System.out.println("Lista vazia");
+		} else {			
+			percorrerRemover(primeiro, descricao);
+		}
 	}
 	
 	private String percorrerImprimir(Node node) {
@@ -49,7 +69,7 @@ public class ListaEncadeada {
 	}
 	
 	public int getCount() {
-		return count;
+		return this.count;
 	}
 	
 	public Node getPrimeiro() {
